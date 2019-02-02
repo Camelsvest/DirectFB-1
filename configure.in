@@ -1,4 +1,4 @@
-dnl Process this file with autoconf to produce a configure script.
+
 
 AC_INIT(include/directfb.h)
 
@@ -193,7 +193,8 @@ if test x"$CXXFLAGS" = x"-g -O2"; then
   CXXFLAGS=
 fi
 
-CFLAGS="-ffast-math -pipe $CFLAGS"
+dnl -ffast-math
+CFLAGS="-fno-stack-protector -pipe $CFLAGS"
 
 DFB_INTERNAL_CFLAGS="-D_GNU_SOURCE $DFB_INTERNAL_CFLAGS"
 
@@ -203,7 +204,7 @@ AC_ARG_ENABLE(extra-warnings,
               [], [enable_extra_warnings=no])
 if test "$enable_extra_warnings" = "yes"; then
   CFLAGS="-W -Wno-sign-compare -Wno-unused-parameter -Wundef -Wcast-qual -Wcast-align -Waggregate-return -Wmissing-declarations -Winline $CFLAGS"
-  CXXFLAGS="-W -Wno-sign-compare -Wno-unused-parameter -Wundef -Wcast-qual -Wcast-align -Waggregate-return -Wmissing-declarations -Winline $CXXFLAGS"
+#  CXXFLAGS="-W -Wno-sign-compare -Wno-unused-parameter -Wundef -Wcast-qual -Wcast-align -Waggregate-return -Wmissing-declarations -Winline $CXXFLAGS"
 fi
 
 # FIXME
@@ -212,7 +213,8 @@ fi
 #fi
 
 if test "$GCC" = "yes"; then
-  CFLAGS_STD="-std=gnu99"
+  dnl CFLAGS_STD="-std=gnu99"
+  CFLAGS_STD=
 fi
 
 
@@ -462,8 +464,9 @@ AC_ARG_ENABLE(debug,
                              [enable debugging @<:@default=no@:>@]),
               [], [enable_debug=no])
 if test "$enable_debug" = "yes"; then
-    CFLAGS="-g -fno-inline -Wno-inline $CFLAGS"
-    CXXFLAGS="-g -fno-inline -Wno-inline $CXXFLAGS"
+    dnl -fno-line
+    CFLAGS="-g -Wno-inline $CFLAGS"
+    #CXXFLAGS="-g -fno-inline -Wno-inline $CXXFLAGS"
     DIRECT_BUILD_DEBUG=1
 else
     DIRECT_BUILD_DEBUG=0
@@ -481,13 +484,13 @@ if test "$enable_debug_support" = "yes" || test "$enable_debug" = "yes"; then
     enable_debug_support=yes
     if test "$enable_debug" = "no"; then
         CFLAGS="-g2 $CFLAGS"
-        CXXFLAGS="-g2 $CXXFLAGS"
+        #CXXFLAGS="-g2 $CXXFLAGS"
     fi
     ##CFLAGS="-O2 $CFLAGS"
     DIRECT_BUILD_DEBUGS=1
 else
     CFLAGS="-g0 -O2 $CFLAGS"
-    CXXFLAGS="-g0 -O2 $CXXFLAGS"
+    #CXXFLAGS="-g0 -O2 $CXXFLAGS"
     DIRECT_BUILD_DEBUGS=0
 fi
 AM_CONDITIONAL(ENABLE_DEBUGS, test "$enable_debug_support" = "yes")
@@ -500,7 +503,8 @@ AC_ARG_ENABLE(trace,
                              [enable call tracing @<:@default=no@:>@]),
               [], [enable_trace=no])
 if test "$enable_trace" = "yes"; then
-    DFB_INTERNAL_CFLAGS="$DFB_INTERNAL_CFLAGS -finstrument-functions"
+    dnl -finstrument-functions
+    DFB_INTERNAL_CFLAGS="$DFB_INTERNAL_CFLAGS"
     DIRECT_BUILD_TRACE=1
 else
     DIRECT_BUILD_TRACE=0
