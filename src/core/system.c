@@ -257,7 +257,7 @@ dfb_system_lookup( void )
 {
      DirectLink *l;
 
-     D_DEBUG_AT( Core_System, "%p()\n", __FUNCTION__ );
+     D_DEBUG_AT( Core_System, "%s()\n", __FUNCTION__ );
 
      direct_modules_explore_directory( &dfb_core_systems );
 
