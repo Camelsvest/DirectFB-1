@@ -44,7 +44,7 @@ main( int argc, char *argv[] )
           D_DERROR( ret, "DFBTest/Init: DirectFBInit() failed!\n" );
           return ret;
      }
-
+    
      /* Create super interface. */
      ret = DirectFBCreate( &dfb );
      if (ret) {
