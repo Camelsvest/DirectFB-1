@@ -124,10 +124,15 @@ DirectFBInit( int *argc, char *(*argv[]) )
 {
      DFBResult ret;
 
+     D_DEBUG_ENTER(DirectFB);
      ret = dfb_config_init( argc, argv );
      if (ret)
-          return ret;
+     {
+        D_DEBUG_EXIT(DirectFB);
+        return ret;
+     }
 
+     D_DEBUG_EXIT(DirectFB);
      return DFB_OK;
 }
 
@@ -165,15 +170,20 @@ DirectFBCreate( IDirectFB **interface_ptr )
      CoreDFB   *core_dfb;
 #endif
 
+     D_DEBUG_ENTER(DirectFB);
      if (!dfb_config) {
           /*  don't use D_ERROR() here, it uses dfb_config  */
           direct_log_printf( NULL, "(!) DirectFBCreate: DirectFBInit "
                              "has to be called before DirectFBCreate!\n" );
+          D_DEBUG_EXIT(DirectFB);
           return DFB_INIT;
      }
 
      if (!interface_ptr)
+     {
+          D_DEBUG_EXIT(DirectFB);        
           return DFB_INVARG;
+     }
 
 
      if (!dfb_config->no_singleton && idirectfb_singleton) {
@@ -181,6 +191,7 @@ DirectFBCreate( IDirectFB **interface_ptr )
 
           *interface_ptr = idirectfb_singleton;
 
+          D_DEBUG_EXIT(DirectFB);
           return DFB_OK;
      }
 
@@ -198,8 +209,11 @@ DirectFBCreate( IDirectFB **interface_ptr )
      }
 
 #if !DIRECTFB_BUILD_PURE_VOODOO
-     if (dfb_config->remote.host)
-          return CreateRemote( dfb_config->remote.host, dfb_config->remote.port, interface_ptr );
+     if (dfb_config->remote.host) {
+          ret = CreateRemote( dfb_config->remote.host, dfb_config->remote.port, interface_ptr );
+          D_DEBUG_EXIT(DirectFB);
+          return ret;
+     }
 
      static DirectMutex lock = DIRECT_MUTEX_INITIALIZER(lock);
 
@@ -211,12 +225,16 @@ DirectFBCreate( IDirectFB **interface_ptr )
           *interface_ptr = idirectfb_singleton;
 
           direct_mutex_unlock( &lock );
+          
+          D_DEBUG_EXIT(DirectFB);          
           return DFB_OK;
      }
 
      ret = dfb_core_create( &core_dfb );
      if (ret) {
           direct_mutex_unlock( &lock );
+          
+          D_DEBUG_EXIT(DirectFB);          
           return ret;
      }
 
@@ -244,9 +262,14 @@ DirectFBCreate( IDirectFB **interface_ptr )
 
      *interface_ptr = dfb;
 
+     D_DEBUG_EXIT(DirectFB);
+
      return DFB_OK;
 #else
-     return CreateRemote( dfb_config->remote.host ? dfb_config->remote.host : "", dfb_config->remote.port, interface_ptr );
+     ret = CreateRemote( dfb_config->remote.host ? dfb_config->remote.host : "", dfb_config->remote.port, interface_ptr );
+
+     D_DEBUG_EXIT(DirectFB);
+     return ret;
 #endif
 }
 
@@ -292,19 +315,29 @@ CreateRemote( const char *host, int port, IDirectFB **ret_interface )
      D_ASSERT( host != NULL );
      D_ASSERT( ret_interface != NULL );
 
-     ret = DirectGetInterface( &funcs, "IDirectFB", "Requestor", NULL, NULL );
-     if (ret)
-          return ret;
+     D_DEBUG_ENTER(DirectFB);
 
-     ret = funcs->Allocate( &interface_ptr );
-     if (ret)
+     ret = DirectGetInterface( &funcs, "IDirectFB", "Requestor", NULL, NULL );
+     if (ret) {
+          D_DEBUG_EXIT(DirectFB);
           return ret;
+     }
+     
+     ret = funcs->Allocate( &interface_ptr );
+     if (ret) {
+          D_DEBUG_EXIT(DirectFB);
+          return ret;
+     }
 
      ret = funcs->Construct( interface_ptr, host, port );
-     if (ret)
+     if (ret) {
+          D_DEBUG_EXIT(DirectFB);
           return ret;
+     }
 
      *ret_interface = interface_ptr;
+
+     D_DEBUG_EXIT(DirectFB);
 
      return DFB_OK;
 }
