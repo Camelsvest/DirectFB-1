@@ -75,6 +75,7 @@ direct_debug_at( DirectLogDomain *domain,
      va_end( ap );
 }
 
+
 #endif /* DIRECT_BUILD_DEBUGS */
 
 __dfb_no_instrument_function__

@@ -89,18 +89,6 @@ void DIRECT_API direct_debug_log( DirectLogDomain *domain,
 void DIRECT_API direct_debug_at( DirectLogDomain *domain,
                                  const char      *format, ... ) D_FORMAT_PRINTF(2);
 
-void DIRECT_API direct_debug_enter( DirectLogDomain *domain,
-                                    const char *func,
-                                    const char *file,
-                                    int         line,
-                                    const char *format, ... )  D_FORMAT_PRINTF(5);
-
-void DIRECT_API direct_debug_exit( DirectLogDomain *domain,
-                                   const char *func,
-                                   const char *file,
-                                   int         line,
-                                   const char *format, ... )  D_FORMAT_PRINTF(5);
-
 void DIRECT_API direct_break( const char *func,
                               const char *file,
                               int         line,
@@ -132,15 +120,12 @@ void DIRECT_API direct_assumption( const char *exp,
           direct_debug_at( &d, __VA_ARGS__ );                                        \
      } while (0)
 
-#define D_DEBUG_ENTER(d,...)                                                         \
-     do {                                                                            \
-          /*direct_debug_enter( &d, __FUNCTION__, __FILE__, __LINE__, x );*/             \
-     } while (0)
+#define D_DEBUG_ENTER(...)                                                          \
+          D_DEBUG("%s:%d Enter %s\n", __FILE__, __LINE__, __FUNCTION__)             \
 
-#define D_DEBUG_EXIT(d,...)                                                          \
-     do {                                                                            \
-          /*direct_debug_exit( &d, __FUNCTION__, __FILE__, __LINE__, x );*/              \
-     } while (0)
+
+#define D_DEBUG_EXIT(...)                                                           \
+          D_DEBUG("%s:%d Exit %s\n", __FILE__, __LINE__, __FUNCTION__)              \
 
 #define D_ASSERT(exp)                                                                \
      do {                                                                            \
