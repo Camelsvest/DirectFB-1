@@ -92,8 +92,8 @@ main( int argc, char *argv[] )
 
      /* Copy loop. */
      while (true) {
-          char         buf[16384];
-          unsigned int length;
+          char buf[16384];
+          int length;
 
           /* Wait for full buffer, if supported, otherwise waits for any data. */
           ret = direct_stream_wait( stream, sizeof(buf), NULL );
