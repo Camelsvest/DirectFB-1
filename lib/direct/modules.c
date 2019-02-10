@@ -188,6 +188,8 @@ direct_modules_explore_directory( DirectModuleDir *directory )
      const char    *path;
      char          *buf;
 
+     D_DEBUG_ENTER(Direct_Modules);
+
      D_ASSERT( directory != NULL );
      D_ASSERT( directory->path != NULL );
 
@@ -275,6 +277,8 @@ direct_modules_explore_directory( DirectModuleDir *directory )
      }
 
      closedir( dir );
+
+     D_DEBUG_EXIT(Direct_Modules);
 
      return count;
 #else
