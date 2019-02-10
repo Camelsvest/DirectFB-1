@@ -57,7 +57,7 @@ typedef enum {
      DIRECT_LOG_ALL      = 0x10,
 
      //DIRECT_LOG_DEBUG    = DIRECT_LOG_DEBUG_8,    /* default debug level */
-     DIRECT_LOG_DEBUG    = DIRECT_LOG_NONE,    /* default debug level */
+     DIRECT_LOG_DEBUG    = DIRECT_LOG_VERBOSE,    /* default debug level */
 
      _DIRECT_LOG_NUM_LEVELS
 } DirectLogLevel;
