@@ -1,0 +1,10 @@
+#system=fbdev
+#fbdev=/dev/fb0
+#mode=1280x960-8
+#depth=16
+#pixelformat=RGB24
+#session=0
+#primary-layer=00
+#memcpy=help
+debug=9:
+no-quiet
