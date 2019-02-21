@@ -6,5 +6,7 @@
 #session=0
 #primary-layer=00
 #memcpy=help
+banner
+mouse-protocol=IMPS/2
 debug=9:
 no-quiet
