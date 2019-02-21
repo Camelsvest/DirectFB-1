@@ -1453,6 +1453,8 @@ dfb_core_signal_handler( int   num,
      bool     locked;
      CoreDFB *core = ctx;
 
+	 D_DEBUG_ENTER();
+	 
      D_ASSERT( core == core_dfb );
 
      locked = pthread_mutex_trylock( &core_dfb_lock ) == 0;
@@ -1462,6 +1464,8 @@ dfb_core_signal_handler( int   num,
      if (locked)
           pthread_mutex_unlock( &core_dfb_lock );
 
+	 D_DEBUG_EXIT();
+	 
      return DSHR_OK;
 }
 
@@ -1471,6 +1475,8 @@ static int
 dfb_core_shutdown( CoreDFB *core, bool emergency )
 {
      CoreDFBShared *shared;
+
+	 D_DEBUG_ENTER();
 
      D_MAGIC_ASSERT( core, CoreDFB );
 
@@ -1530,6 +1536,8 @@ dfb_core_shutdown( CoreDFB *core, bool emergency )
 
      direct_mutex_deinit( &core->memory_permissions_lock );
 
+	 D_DEBUG_EXIT();
+	 
      return 0;
 }
 

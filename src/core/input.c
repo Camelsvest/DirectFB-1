@@ -433,7 +433,9 @@ dfb_input_core_initialize( CoreDFB            *core,
      DFBResult result = DFB_OK;
 #endif
 
-     D_DEBUG_AT( Core_Input, "dfb_input_core_initialize( %p, %p, %p )\n", core, data, shared );
+	 D_DEBUG_ENTER();
+
+	 D_DEBUG_AT( Core_Input, "dfb_input_core_initialize( %p, %p, %p )\n", core, data, shared );
 
      D_ASSERT( data != NULL );
      D_ASSERT( shared != NULL );
@@ -482,6 +484,8 @@ dfb_input_core_initialize( CoreDFB            *core,
      D_MAGIC_SET( data, DFBInputCore );
      D_MAGIC_SET( shared, DFBInputCoreShared );
 
+	 D_DEBUG_EXIT();
+	 
      return DFB_OK;
 
 #if FUSION_BUILD_MULTI
@@ -1396,6 +1400,8 @@ init_devices( CoreDFB *core )
      DirectModuleEntry   *module;
      FusionSHMPoolShared *pool = dfb_core_shmpool( core );
 
+	 D_DEBUG_ENTER();
+	 
      D_DEBUG_AT( Core_Input, "%s( %p )\n", __FUNCTION__, core );
 
      D_ASSERT( core_input != NULL );
@@ -1574,6 +1580,8 @@ init_devices( CoreDFB *core )
                }
           }
      }
+
+	 D_DEBUG_EXIT();
 }
 
 /*
