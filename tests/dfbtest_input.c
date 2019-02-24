@@ -41,6 +41,7 @@ Test_Sensitivity( IDirectFB        *dfb,
      IDirectFBInputDevice *device;
      IDirectFBEventBuffer *buffer;
      int                   i, n;
+     bool                  quit = false;
      int                   sensitivities[] = { 0x100, 0x200, 0x80 };
 
      D_INFO( "DFBTest/Input: Testing sensitivity with input device %u...\n", device_id );
@@ -58,7 +59,7 @@ Test_Sensitivity( IDirectFB        *dfb,
           return ret;
      }
 
-     for (i=0; i<D_ARRAY_SIZE(sensitivities); i++) {
+     for (i=0; i<D_ARRAY_SIZE(sensitivities) && !quit; i++) {
           DFBInputDeviceConfig config;
           unsigned int         move = 0;
 
@@ -77,7 +78,7 @@ Test_Sensitivity( IDirectFB        *dfb,
 
           buffer->Reset( buffer );
 
-          for (n=0; n<500; n++) {
+          for (n=0; n<500 && !quit; n++) {
                DFBInputEvent event;
 
                buffer->WaitForEvent( buffer );
@@ -87,7 +88,7 @@ Test_Sensitivity( IDirectFB        *dfb,
                switch (event.type) {
                     case DIET_AXISMOTION:
                          if (event.flags & DIEF_AXISREL) {
-                              //D_INFO( "DFBTest/Input: Motion (axis %d) by %d\n", event.axis, event.axisrel );
+                              D_INFO( "DFBTest/Input: Motion (axis %d) by %d\n", event.axis, event.axisrel );
 
                               if (event.axisrel > 0)
                                    move += event.axisrel;
@@ -96,6 +97,16 @@ Test_Sensitivity( IDirectFB        *dfb,
                          }
 
                          break;
+
+                    case DIET_BUTTONPRESS:
+                        D_INFO("DFBTest/Input: Quit fron recycle loop DIET_BUTTONPRESS.\n");
+                        quit = true;
+                        break;
+                      
+                    case DIET_BUTTONRELEASE:
+                        D_INFO("DFBTest/Input: Quit fron recycle loop DIET_BUTTONRELEASE.\n");
+                        quit = true;
+                        break;
 
                     default:
                          break;
