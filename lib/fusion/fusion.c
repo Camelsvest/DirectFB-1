@@ -484,7 +484,7 @@ out:
  * Otherwise the world with the specified index is joined or created.
  */
 DirectResult
-fusion_enter( int               world_index,
+fusion_enter(int           world_index,
               int               abi_version,
               FusionEnterRole   role,
               FusionWorld     **ret_world )

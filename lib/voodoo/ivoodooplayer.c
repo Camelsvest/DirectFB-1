@@ -204,23 +204,32 @@ CreateRemote( const char *host, int session, IVoodooPlayer **ret_interface )
      DirectInterfaceFuncs *funcs;
      void                 *interface_ptr;
 
+     D_DEBUG("Enter %s...\r\n", __FUNCTION__);
+
      D_ASSERT( host != NULL );
      D_ASSERT( ret_interface != NULL );
 
      ret = DirectGetInterface( &funcs, "IVoodooPlayer", "Requestor", NULL, NULL );
-     if (ret)
+     if (ret) {
+          D_DEBUG("Exit %s...\r\n", __FUNCTION__):
           return ret;
+     }
 
      ret = funcs->Allocate( &interface_ptr );
-     if (ret)
+     if (ret) {
+          D_DEBUG("Exit %s...\r\n", __FUNCTION__):        
           return ret;
+     }
 
      ret = funcs->Construct( interface_ptr, host, session );
-     if (ret)
+     if (ret) {
+          D_DEBUG("Exit %s...\r\n", __FUNCTION__):        
           return ret;
+     }
 
      *ret_interface = interface_ptr;
 
+     D_DEBUG("Exit %s...\r\n", __FUNCTION__):
      return DR_OK;
 }
 
