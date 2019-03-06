@@ -158,16 +158,6 @@ direct_cleanup_handler_remove( DirectCleanupHandler *handler )
 DirectResult
 direct_initialize()
 {
-     direct_log_domain_config_level("Fusion/SHMPool", DIRECT_LOG_NONE);
-     direct_log_domain_config_level("Fusion/SHMHeap", DIRECT_LOG_NONE);
-     direct_log_domain_config_level("Fusion/Skirmish", DIRECT_LOG_NONE);
-     direct_log_domain_config_level("Fusion/Ref", DIRECT_LOG_NONE);
-     direct_log_domain_config_level("Fusion/Object", DIRECT_LOG_NONE);
-     direct_log_domain_config_level("Direct/Mem", DIRECT_LOG_NONE);
-     direct_log_domain_config_level("Direct/Thread/Init", DIRECT_LOG_NONE);
-     direct_log_domain_config_level("Core/SurfBuffer", DIRECT_LOG_NONE);
-     direct_log_domain_config_level("Core/SurfPoolLock", DIRECT_LOG_NONE);
-
 
      direct_clock_set_time( DIRECT_CLOCK_SESSION, 0 );
 
