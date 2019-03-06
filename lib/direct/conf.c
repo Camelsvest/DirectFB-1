@@ -77,7 +77,7 @@ __D_conf_init()
 {
      direct_map_create( 123, config_option_compare, config_option_hash, NULL, &config_options );
 
-     direct_config->log_level             = DIRECT_LOG_DEBUG_0;
+     direct_config->log_level             = DIRECT_LOG_DEBUG_5;
      direct_config->trace                 = true;
      direct_config->sighandler            = true;
 
